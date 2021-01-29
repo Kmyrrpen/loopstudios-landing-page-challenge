@@ -1,0 +1,107 @@
+.hero {
+    display: flex;
+    flex-direction: column;
+    padding: 7vh $horizontal 0;
+    margin-bottom: 20vh;
+
+    @include if-width-and-down('small') {
+        background: center / cover no-repeat url('../images/mobile/image-hero.jpg');
+        height: 100vw / (0.557);
+        @include if-width-and-up('mobile') {
+            max-height: 600px; // restraint after going away from mobile.
+        }
+    }
+    @include if-width-and-up('small') {
+        background: no-repeat  (top right 50%) / cover url('../images/desktop/image-hero.jpg');
+        height: 100vw / (2.2153);
+        min-height: 400px;
+    }
+    .nav {
+        width: 100%;
+        display: flex;
+        align-self: flex-start;
+        align-items: center;
+        justify-content: space-between;
+        #nav__logo {
+            z-index: 4;
+        }
+        label[for="dropbar"] {
+            z-index: 4;
+            // hide burger when past small breakpoint.
+            @include if-width-and-up('small') {
+                display: none;
+            }
+        }
+        &__links {
+            display: flex;
+            z-index: 3;
+            // the text links.
+            a {
+                color: white;
+                text-decoration: none;
+
+                &:not(:last-child) {
+                    margin-right: 2vw;
+                }
+            }
+            // hide links when below small breakpoint.
+            @include if-width-and-down('small') {
+                position: fixed;
+                top: 0;
+                left: 100%;
+                width: 100%;
+                height: 100vh;
+                background-color: black;
+                transition: transform 0.5s;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 5vw;
+                a {
+                    font-family: $j-sans;
+                    font-size: 2rem;
+                    text-transform: uppercase;
+                    margin: 1vh 0;
+                }
+            }
+        }
+    }
+    .flex-box {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: center;
+        justify-content: center;
+    }
+    .box {
+        color: white;
+        font-size: 2rem;
+        padding: 1rem 1.5rem;
+        overflow-wrap: break-word;
+
+        width: 100%;
+        max-width: 400px;
+        border: 2px solid white;
+
+        @include if-width-and-up('mobile') {
+            align-self: flex-start;
+            overflow-wrap: normal;
+            width: 80%;
+        }
+        @include if-width-and-up('small') {
+            width: 50%;
+        }
+        @include if-width-and-up('medium') {
+            font-size: 2.7rem;
+            width: 40%;
+        }
+    }
+}
+
+#dropbar {
+    display: none;
+
+    &:checked + .nav__links {
+        transform: translate(-100%);
+    }
+}

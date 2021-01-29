@@ -1,0 +1,200 @@
+@import "_variables";
+@import "_mixins";
+@import "_header";
+@import "_footer";
+
+html {
+    font-size: 100%;
+    box-sizing: border-box;
+    @include if-width-and-down('mobile') {
+        font-size: 80%;
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    line-height: 1.3;
+    font-family: $alata;
+}
+
+section {
+    margin-bottom: 20vh;
+}
+
+// the center content.
+.main-content {
+    padding: 0 $horizontal;
+    position: relative;
+    // Mobile view.
+    img {
+        width: 100%;
+    }
+    .text-box {
+        text-align: center;
+        background-color: white;
+        font-size: $medium-font;
+        h1 {
+            font-family: $j-sans;
+            font-size: 2rem;
+            color: $black;
+        }
+    }
+
+    // Desktop view.
+    @include if-width-and-up('medium') {
+        img {
+            width: 60%;
+        }
+        .text-box {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 40%;
+            max-height: 100%;
+            text-align: left;
+            line-height: 1.5;
+            padding: 2% 5% 0;
+            font-size: 0.75rem;
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    }
+}
+
+.example-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5vw;
+    padding: 0 $horizontal;
+    >.title {
+        font-size: 3rem;
+    }
+    >.button-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5vh;
+        button {
+            padding: 0.8rem 1.3rem;
+            border: 2px solid black;
+            font-size: 1.5rem;
+            letter-spacing: 7px;
+            font-family: $alata;
+            background-color: transparent;
+            cursor: pointer;
+            transition: background-color 0.25s, color 0.25s;
+
+            &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
+    }
+    >.img-box {
+        position: relative;
+        font-size: 0;
+        cursor: pointer;
+        .title {
+            font-size: 2rem;
+            color: white;
+            position: absolute;
+            bottom: 4%;
+            left: 5%;
+            margin: 0;
+            z-index: 2;
+            @include if-width-and-up('medium') {
+                font-size: 3rem;
+            }
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+    @include if-width-and-up('small') {
+        grid-template-columns: repeat(2, 1fr);
+        .button-box {
+            grid-row-start: 1;
+            grid-column-end: -1;
+            margin: 0;
+        }
+    }
+
+    @include if-width-and-up('medium') {
+        grid-template-columns: repeat(4, 1fr);
+        >.title {
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+        // occupy remaining space and align button to the end.
+        >.button-box {
+            justify-content: flex-end;   
+            grid-row-start: 1;
+            grid-column-start: 3;
+            grid-column-end: -1;
+        }
+    }       
+}
+
+// Place layer on top of box.
+.img-box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(-0.25turn,#0000, rgba(0, 0, 0, 0.6));
+    @include if-width-and-up('medium') {
+        background: linear-gradient(#0000, rgba(0, 0, 0, 0.6));
+    }
+    height: 100%;
+    width: 100%;
+    transition: background-color 0.5s ease;
+}
+
+.img-box:hover {
+    &::after {
+        background: none;
+        background-color: rgba(255, 255, 255, 0.801);
+    }
+    .title {
+        color: black;
+    }
+}
+
+//Animation and hover effects.
+.link, .link-icon {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.link::after, .link-icon::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    right: 100%;
+    width: 50%;
+    border-bottom: 3px solid white;
+    transition: transform 0.5s;
+}
+
+.link:hover::after {
+    transform: translate(150%);
+}
+
+.footer-box #logo-box .link-icon {
+    &::after {
+        width: 100%;
+    }
+    &:hover::after {
+        transform: translate(100%);
+    }
+}
